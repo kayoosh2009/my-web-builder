@@ -9,15 +9,54 @@ body {
 }
 
 #sidebar {
-  width: 250px;
-  background-color: #2d2d2d;
+  width: 240px;
+  background-color: #1f1f1f;
   color: white;
+  padding: 15px;
+}
+
+#sidebar button {
+  display: block;
+  width: 100%;
+  margin: 8px 0;
   padding: 10px;
+  background-color: #3b3b3b;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#sidebar button:hover {
+  background-color: #5a5a5a;
 }
 
 #canvas {
   flex: 1;
-  background-color: #f4f4f4;
+  background-color: #f0f0f0;
   padding: 20px;
-  overflow: auto;
+  overflow-y: auto;
+}
+
+#settings-panel {
+  width: 240px;
+  background-color: #f7f7f7;
+  border-left: 1px solid #ccc;
+  padding: 15px;
+  display: none;
+  flex-shrink: 0;
+}
+
+.settings-field {
+  margin-bottom: 10px;
+}
+
+.settings-field label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+#canvas div.active {
+  outline: 2px solid #007bff;
 }
