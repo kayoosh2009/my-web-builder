@@ -1,15 +1,24 @@
-<!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Web Builder 0.0.2</title>
+  <title>Web Builder 0.0.3</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div class="top-bar">
+    <button id="btn-download">Скачать ZIP</button>
+    <button id="btn-undo">Undo</button>
+    <button id="btn-redo">Redo</button>
+    <select id="preview-mode">
+      <option value="desktop">Desktop</option>
+      <option value="mobile">Mobile</option>
+    </select>
+  </div>
+
   <div class="container">
     <div id="sidebar"></div>
-    <div id="canvas" contenteditable="true"></div>
+    <div id="canvas"></div>
     <div id="settings-panel"></div>
   </div>
 
