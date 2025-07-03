@@ -1,42 +1,46 @@
 export function setupSidebar() {
   const sidebar = document.getElementById("sidebar");
 
+  const title = document.createElement("h2");
+  title.textContent = "Инструменты";
+  sidebar.appendChild(title);
+
   const buttons = [
-    { label: "Текст", action: () => addElement("text") },
-    { label: "Картинка", action: () => addElement("image") },
-    { label: "Рамка", action: () => addElement("border") }
+    { label: "Добавить текст", action: () => addBlock("text") },
+    { label: "Добавить изображение", action: () => addBlock("image") },
+    { label: "Добавить рамку", action: () => addBlock("border") }
   ];
 
   buttons.forEach(btn => {
     const button = document.createElement("button");
     button.textContent = btn.label;
-    button.style.display = "block";
-    button.style.margin = "10px 0";
     button.onclick = btn.action;
     sidebar.appendChild(button);
   });
 }
 
-function addElement(type) {
+function addBlock(type) {
   const canvas = document.getElementById("canvas");
-  const el = document.createElement("div");
-  el.contentEditable = true;
-  el.style.border = "1px solid gray";
-  el.style.padding = "10px";
-  el.style.margin = "10px";
+  const block = document.createElement("div");
+  block.contentEditable = true;
+  block.style.border = "1px solid #999";
+  block.style.padding = "10px";
+  block.style.marginBottom = "10px";
+  block.style.background = "#fff";
 
   if (type === "text") {
-    el.textContent = "Новый текст";
+    block.textContent = "Введите текст...";
   } else if (type === "image") {
     const img = document.createElement("img");
-    img.src = "https://via.placeholder.com/150";
-    img.alt = "Placeholder";
+    img.src = "https://via.placeholder.com/200x100";
+    img.alt = "Картинка";
     img.style.maxWidth = "100%";
-    el.appendChild(img);
+    block.innerHTML = "";
+    block.appendChild(img);
   } else if (type === "border") {
-    el.style.border = "3px dashed blue";
-    el.textContent = "Блок с рамкой";
+    block.textContent = "Блок с рамкой";
+    block.style.border = "3px dashed #007bff";
   }
 
-  canvas.appendChild(el);
+  canvas.appendChild(block);
 }
