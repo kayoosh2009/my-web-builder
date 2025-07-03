@@ -3,9 +3,22 @@ body {
   font-family: sans-serif;
 }
 
+.top-bar {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  background: #ddd;
+  border-bottom: 1px solid #ccc;
+}
+
+.top-bar button, .top-bar select {
+  padding: 6px 10px;
+  font-size: 14px;
+}
+
 .container {
   display: flex;
-  height: 100vh;
+  height: calc(100vh - 50px);
 }
 
 #sidebar {
@@ -13,6 +26,7 @@ body {
   background-color: #1f1f1f;
   color: white;
   padding: 15px;
+  overflow-y: auto;
 }
 
 #sidebar button {
@@ -35,7 +49,11 @@ body {
   flex: 1;
   background-color: #f0f0f0;
   padding: 20px;
-  overflow-y: auto;
+  overflow: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 #settings-panel {
@@ -45,6 +63,7 @@ body {
   padding: 15px;
   display: none;
   flex-shrink: 0;
+  overflow-y: auto;
 }
 
 .settings-field {
@@ -60,3 +79,38 @@ body {
 #canvas div.active {
   outline: 2px solid #007bff;
 }
+
+.block {
+  position: absolute;
+  cursor: move;
+  background: white;
+  padding: 10px;
+  border: 1px solid #ccc;
+  min-width: 100px;
+  min-height: 40px;
+  user-select: none;
+}
+
+.mobile-preview #canvas {
+  width: 375px;
+  margin: 0 auto;
+  border: 1px solid #aaa;
+  background: #fff;
+}
+
+.guide-line {
+  position: absolute;
+  background: red;
+  z-index: 999;
+}
+
+.guide-line.v {
+  width: 1px;
+  height: 100%;
+}
+
+.guide-line.h {
+  height: 1px;
+  width: 100%;
+}
+
