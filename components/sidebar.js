@@ -1,46 +1,31 @@
-export function setupSidebar() {
-  const sidebar = document.getElementById("sidebar");
+import { undo, redo } from './canvas.js';
 
-  const title = document.createElement("h2");
-  title.textContent = "Инструменты";
-  sidebar.appendChild(title);
+export function setupToolbar() {
+  document.getElementById('btn-undo').onclick = undo;
+  document.getElementById('btn-redo').onclick = redo;
 
-  const buttons = [
-    { label: "Добавить текст", action: () => addBlock("text") },
-    { label: "Добавить изображение", action: () => addBlock("image") },
-    { label: "Добавить рамку", action: () => addBlock("border") }
-  ];
+  document.getElementById('btn-download').onclick = () => {
+    const html = document.documentElement.outerHTML;
+    const css = document.querySelector('style')?.textContent || '';
 
-  buttons.forEach(btn => {
-    const button = document.createElement("button");
-    button.textContent = btn.label;
-    button.onclick = btn.action;
-    sidebar.appendChild(button);
-  });
-}
+    const zip = new JSZip();
+    zip.file("index.html", html);
+    zip.file("style.css", css);
 
-function addBlock(type) {
-  const canvas = document.getElementById("canvas");
-  const block = document.createElement("div");
-  block.contentEditable = true;
-  block.style.border = "1px solid #999";
-  block.style.padding = "10px";
-  block.style.marginBottom = "10px";
-  block.style.background = "#fff";
+    zip.generateAsync({ type: 'blob' }).then(content => {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(content);
+      a.download = "site.zip";
+      a.click();
+    });
+  };
 
-  if (type === "text") {
-    block.textContent = "Введите текст...";
-  } else if (type === "image") {
-    const img = document.createElement("img");
-    img.src = "https://via.placeholder.com/200x100";
-    img.alt = "Картинка";
-    img.style.maxWidth = "100%";
-    block.innerHTML = "";
-    block.appendChild(img);
-  } else if (type === "border") {
-    block.textContent = "Блок с рамкой";
-    block.style.border = "3px dashed #007bff";
-  }
-
-  canvas.appendChild(block);
+  const preview = document.getElementById('preview-mode');
+  preview.onchange = (e) => {
+    if (e.target.value === 'mobile') {
+      document.body.classList.add('mobile-preview');
+    } else {
+      document.body.classList.remove('mobile-preview');
+    }
+  };
 }
