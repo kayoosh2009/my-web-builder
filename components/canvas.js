@@ -6,6 +6,10 @@ let isResizing = false;
 export function setupCanvas() {
   const canvas = document.getElementById('canvas');
 
+  // Автозагрузка проекта
+  const saved = localStorage.getItem('autosave');
+  if (saved) canvas.innerHTML = saved;
+
   canvas.addEventListener('mousedown', e => {
     if (e.target.classList.contains('block')) {
       selected = e.target;
@@ -54,6 +58,42 @@ export function setupCanvas() {
       document.getElementById('settings-panel').style.display = 'none';
     }
   });
+
+  // Двойной клик для редактирования текста
+  canvas.addEventListener('dblclick', e => {
+    if (e.target.classList.contains('block')) {
+      const input = document.createElement('textarea');
+      input.value = e.target.innerText;
+      input.style.position = 'absolute';
+      input.style.left = `${e.target.offsetLeft}px`;
+      input.style.top = `${e.target.offsetTop}px`;
+      input.style.width = `${e.target.offsetWidth}px`;
+      input.style.height = `${e.target.offsetHeight}px`;
+      input.style.zIndex = 999;
+      document.body.appendChild(input);
+      input.focus();
+
+      input.onblur = () => {
+        e.target.innerText = input.value;
+        input.remove();
+      };
+    }
+  });
+
+  // Клавиша дублирования: Ctrl+D
+  document.addEventListener('keydown', e => {
+    if (e.ctrlKey && e.key === 'd' && selected) {
+      const clone = selected.cloneNode(true);
+      clone.style.left = `${selected.offsetLeft + 20}px`;
+      clone.style.top = `${selected.offsetTop + 20}px`;
+      canvas.appendChild(clone);
+    }
+  });
+
+  // Автосохранение каждые 3 секунды
+  setInterval(() => {
+    localStorage.setItem('autosave', canvas.innerHTML);
+  }, 3000);
 }
 
 function deselectAll() {
